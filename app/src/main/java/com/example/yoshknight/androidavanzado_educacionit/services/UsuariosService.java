@@ -21,6 +21,7 @@ import retrofit2.Response;
 
 public class UsuariosService extends Service {
 
+    private static final String TAG = "UsuariosService";
     private boolean isFreeMutex;
 
     @Override
@@ -33,9 +34,14 @@ public class UsuariosService extends Service {
     public int onStartCommand(Intent intent, int flags, final int startId) {
         if (isFreeMutex)
         {
+            Log.i(TAG, "onStartCommand: CAPTURO MUTEX ");
             isFreeMutex=false;
             new RequestUsuarios().execute(startId);
 
+        }
+        else
+        {
+            Log.i(TAG, "onStartCommand: MUTEX CAPTURADO");
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -57,10 +63,9 @@ public class UsuariosService extends Service {
         protected Void doInBackground(Integer... integers) {
 
             int serviceId=integers[0];
-
-
             Response<List<Usuario>> response = null;
             try {
+                Log.i(TAG, "doInBackground: Request con retrofit");
                 response = RetrofitSingleton.getInstance().getService().getUserList().execute();
 
                 if (response.isSuccessful()) {
@@ -68,8 +73,11 @@ public class UsuariosService extends Service {
                             .getDatabaseReference(getApplicationContext())
                             .getDao();
 
+                    Log.i(TAG, "doInBackground: Response de retrofit exitoso - Cantidad de usuarios: "+response.body().size());
                     for (Usuario usuario : response.body())
                         dao.crearUsuarios(usuario);
+                    Log.i(TAG, "doInBackground: Usuarios Cargador");
+
                 }
             }catch (IOException e){
                 e.printStackTrace();
