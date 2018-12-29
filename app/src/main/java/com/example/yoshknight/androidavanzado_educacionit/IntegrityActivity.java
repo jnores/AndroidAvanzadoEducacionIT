@@ -1,9 +1,13 @@
 package com.example.yoshknight.androidavanzado_educacionit;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
@@ -25,9 +29,15 @@ import java.util.List;
  * un servicio con retrofit para cargar los usuarios en la DB local
  * DB local con Room
  * un asyncTask para actualizar cargar los usuarios de la DB en el listado.
+ *
+ *
+ *
+ * Ver BroadcastReceiver para actualizar la lista de usuarios sin el boton.
+ * generar un evento desde mi servicio y escucharlo con el BroadcastReceiver.
  */
 public class IntegrityActivity extends AppCompatActivity implements ListadoRootUsuariosFragment.AdapterSource {
 
+    private static final String TAG = "IntegrityActivity";
     private List<Usuario> listUsuarios;
     UsuariosAdapter adapter;
     //private ListView lstUsuarios;
@@ -42,14 +52,15 @@ public class IntegrityActivity extends AppCompatActivity implements ListadoRootU
 
         //lstUsuarios = findViewById(R.id.lvUsuarios);
         btnLoad = findViewById(R.id.btnCargarDatos);
+        btnLoad.setVisibility(View.GONE);
 
-        btnLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new LoadListaUsuarios().execute();
-            }
-        });
-
+//        btnLoad.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        new LoadListaUsuarios().execute();
     }
 
     @Override
@@ -92,6 +103,15 @@ public class IntegrityActivity extends AppCompatActivity implements ListadoRootU
         Intent intent = new Intent(this, UsuariosService.class);
         startService(intent);
 
+        BroadcastReceiver br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(TAG, "onReceiveBroadcast: ");
+                new LoadListaUsuarios().execute();
+            }
+        };
+
+        registerReceiver(br,new IntentFilter(UsuariosService.ACTION_USUARIOS_CARGADOS));
     }
 
 }

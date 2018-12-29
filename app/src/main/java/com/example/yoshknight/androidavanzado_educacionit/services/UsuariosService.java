@@ -21,6 +21,7 @@ import retrofit2.Response;
 
 public class UsuariosService extends Service {
 
+    public static final String ACTION_USUARIOS_CARGADOS = "USUARIOS_ACTUALIZADOS";
     private static final String TAG = "UsuariosService";
     private boolean isFreeMutex;
 
@@ -78,13 +79,15 @@ public class UsuariosService extends Service {
                         dao.crearUsuarios(usuario);
                     Log.i(TAG, "doInBackground: Usuarios Cargador");
 
+                    Log.i(TAG, "doInBackground: Genero Broadcast con Action: "+ACTION_USUARIOS_CARGADOS);
+                    sendBroadcast(new Intent(ACTION_USUARIOS_CARGADOS) );
+
                 }
             }catch (IOException e){
                 e.printStackTrace();
             }
 
             stopSelf(serviceId);
-
             isFreeMutex=true;
             return null;
         }
