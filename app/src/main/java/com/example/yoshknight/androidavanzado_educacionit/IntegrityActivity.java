@@ -5,9 +5,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.yoshknight.androidavanzado_educacionit.fragments.ListadoRootUsuariosFragment;
 import com.example.yoshknight.androidavanzado_educacionit.modelos.Usuario;
 import com.example.yoshknight.androidavanzado_educacionit.room.UsuariosDatabase;
 import com.example.yoshknight.androidavanzado_educacionit.services.UsuariosService;
@@ -23,10 +26,11 @@ import java.util.List;
  * DB local con Room
  * un asyncTask para actualizar cargar los usuarios de la DB en el listado.
  */
-public class IntegrityActivity extends AppCompatActivity {
+public class IntegrityActivity extends AppCompatActivity implements ListadoRootUsuariosFragment.AdapterSource {
 
     private List<Usuario> listUsuarios;
-    private ListView lstUsuarios;
+    UsuariosAdapter adapter;
+    //private ListView lstUsuarios;
     private Button btnLoad;
 
     @Override
@@ -34,8 +38,9 @@ public class IntegrityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_integrity);
         listUsuarios = new ArrayList<>();
+        adapter = new UsuariosAdapter(listUsuarios);
 
-        lstUsuarios = findViewById(R.id.lstUsuarios);
+        //lstUsuarios = findViewById(R.id.lvUsuarios);
         btnLoad = findViewById(R.id.btnCargarDatos);
 
         btnLoad.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +50,11 @@ public class IntegrityActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public ListAdapter getListAdapter() {
+        return adapter;
     }
 
     private class LoadListaUsuarios extends AsyncTask<Void,Void,List<Usuario>>{
@@ -66,11 +76,10 @@ public class IntegrityActivity extends AppCompatActivity {
     private void loadList() {
         if ( ! listUsuarios.isEmpty() )
         {
-            UsuariosAdapter adapter = new UsuariosAdapter(listUsuarios);
-            lstUsuarios.setAdapter(adapter);
-
+            //lstUsuarios.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             btnLoad.setVisibility(View.GONE);
-            lstUsuarios.setVisibility(View.VISIBLE);
+            //lstUsuarios.setVisibility(View.VISIBLE);
         }
         else
         {
