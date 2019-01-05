@@ -1,4 +1,4 @@
-package com.example.yoshknight.androidavanzado_educacionit;
+package com.example.yoshknight.androidavanzado_educacionit.clases.cuarta;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.yoshknight.androidavanzado_educacionit.R;
 import com.example.yoshknight.androidavanzado_educacionit.services.TemporizadorService;
 
 /**

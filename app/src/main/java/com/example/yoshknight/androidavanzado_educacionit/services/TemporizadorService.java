@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.example.yoshknight.androidavanzado_educacionit.Clase4BRActivity;
+import com.example.yoshknight.androidavanzado_educacionit.clases.cuarta.Clase4BRActivity;
 
 public class TemporizadorService extends Service {
     @Override
