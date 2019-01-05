@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.yoshknight.androidavanzado_educacionit.adapters.UsuariosRecyclerAdapter;
 import com.example.yoshknight.androidavanzado_educacionit.fragments.ListadoRootUsuariosFragment;
 import com.example.yoshknight.androidavanzado_educacionit.modelos.Usuario;
 import com.example.yoshknight.androidavanzado_educacionit.room.UsuariosDatabase;
@@ -34,6 +35,21 @@ import java.util.List;
  *
  * Ver BroadcastReceiver para actualizar la lista de usuarios sin el boton.
  * generar un evento desde mi servicio y escucharlo con el BroadcastReceiver.
+ *
+ * Resumen:
+ *  - Fragments + Recycler View
+ *  - WS - Retrofit
+ *  - Room y servicios
+ *  - BroadcastReceiver
+ *  - AlarmManager -> VER WorkManager
+ *  - Notificaciones
+ *
+ *  Implementarlo con
+ *   - RecyclerView
+ *   - Agregar una alarma para Actualizar los datos en backend.
+ *   -
+ *
+ *
  */
 public class IntegrityActivity extends AppCompatActivity implements ListadoRootUsuariosFragment.AdapterSource {
 
@@ -42,6 +58,7 @@ public class IntegrityActivity extends AppCompatActivity implements ListadoRootU
     UsuariosAdapter adapter;
     //private ListView lstUsuarios;
     private Button btnLoad;
+    private UsuariosRecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +66,23 @@ public class IntegrityActivity extends AppCompatActivity implements ListadoRootU
         setContentView(R.layout.activity_integrity);
         listUsuarios = new ArrayList<>();
         adapter = new UsuariosAdapter(listUsuarios);
+        recyclerAdapter = new UsuariosRecyclerAdapter(listUsuarios);
 
         //lstUsuarios = findViewById(R.id.lvUsuarios);
         btnLoad = findViewById(R.id.btnCargarDatos);
         btnLoad.setVisibility(View.GONE);
 
-//        btnLoad.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
         new LoadListaUsuarios().execute();
     }
 
     @Override
     public ListAdapter getListAdapter() {
         return adapter;
+    }
+
+    @Override
+    public UsuariosRecyclerAdapter getRecyclerAdapter() {
+        return recyclerAdapter;
     }
 
     private class LoadListaUsuarios extends AsyncTask<Void,Void,List<Usuario>>{
@@ -89,6 +106,8 @@ public class IntegrityActivity extends AppCompatActivity implements ListadoRootU
         {
             //lstUsuarios.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            recyclerAdapter.notifyDataSetChanged();
+
             btnLoad.setVisibility(View.GONE);
             //lstUsuarios.setVisibility(View.VISIBLE);
         }

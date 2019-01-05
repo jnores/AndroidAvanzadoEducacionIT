@@ -29,12 +29,12 @@
         <activity android:name=".ServiceBindedActivity" />
         <activity android:name=".IntegrityActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
 
         <service android:name=".services.Temporizador" />
@@ -47,11 +47,11 @@
         <activity android:name=".clases.cuarta.Clase4WifiActivity" />
         <activity android:name=".clases.cuarta.Clase4AlarmaActivity" />
         <activity android:name=".clases.cuarta.Clase4NotificacionesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 
