@@ -24,21 +24,28 @@
         <activity android:name=".activities.DetalleProductoActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".ImageActivity" />
-        <activity android:name=".Clase3Activity"></activity>
-        <activity android:name=".ServiceBindedActivity">
-        </activity>
+        <activity android:name=".Clase3Activity" />
+        <activity android:name=".ServiceBindedActivity"></activity>
         <activity android:name=".IntegrityActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <service android:name=".services.Temporizador" />
+        <service android:name=".services.CronometroBinded" />
+        <service android:name=".services.UsuariosService" />
+        <service android:name=".services.TemporizadorService" />
+
+        <activity android:name=".Clase4BRActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service android:name=".services.Temporizador" />
-        <service android:name=".services.CronometroBinded" />
-        <service android:name=".services.UsuariosService" />
-
     </application>
 
 </manifest>

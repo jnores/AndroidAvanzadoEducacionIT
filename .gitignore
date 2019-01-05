@@ -1,6 +1,9 @@
 # Built application files
 /*/build/
 
+# Gen  files
+/*/src/main/gen/
+
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
 
